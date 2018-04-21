@@ -4,6 +4,7 @@ import wx
 import uniq_list_gui_main
 import datetime
 import csv
+import os.path
 
 # Implementing frmMain
 class uniq_list_gui_events( uniq_list_gui_main.frmMain ):
@@ -19,6 +20,7 @@ class uniq_list_gui_events( uniq_list_gui_main.frmMain ):
             msgDialog.ShowModal()
             
         else:
+            targetFolder = os.path.dirname(filePath)
             targetFile = open(filePath,'r')
             reader = csv.reader(targetFile)
             li_uniq = []
@@ -26,7 +28,7 @@ class uniq_list_gui_events( uniq_list_gui_main.frmMain ):
                 if x not in li_uniq:
                     li_uniq.append(x)
             now = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-            fileName = 'UniqList_' + now  + '.txt'
+            fileName = targetFolder + '\\UniqList_' + now  + '.txt'
             newFile = open(fileName,'w')
             writer = csv.writer(newFile,lineterminator='\n')
             writer.writerows(li_uniq)
